@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Okanagan Team Flowchart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F5F4; --surface:#FFFFFF; --surface-2:#E7EDEB; --ink:#14201C; --ink-2:#46544F; --ink-3:#7A8783;
+  --line:#C9D3D0; --accent:#0B7580; --accent-soft:#D3EBED; --loop:#B06A00; --loop-soft:#F7E7CE;
+  --bgc:#2E5C7B; --pinna:#8A4B7D; --ona:#3E7A3A; --eco:#976811;
+  --c-sd:#56636B; --c-hydro:#2466A8; --c-geo:#96561C; --c-hyd:#0B7580; --c-map:#6A4C9E; --c-en:#B06A00; --c-rep:#14201C; --c-ldof:#7A8783;
+  --shadow:0 1px 2px rgba(20,32,28,.06),0 6px 18px rgba(20,32,28,.06);
+  --display:"Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E1513; --surface:#16201D; --surface-2:#1D2926; --ink:#E4EDEA; --ink-2:#A6B5B0; --ink-3:#6F7E79;
+    --line:#2B3A36; --accent:#4BC2CB; --accent-soft:#113A3D; --loop:#F0A63B; --loop-soft:#3A2A10;
+    --bgc:#86B6D8; --pinna:#D69DC9; --ona:#92CB8C; --eco:#DDB466;
+    --c-sd:#A3B0B8; --c-hydro:#6FA8E0; --c-geo:#D6975C; --c-hyd:#4BC2CB; --c-map:#AC90DD; --c-en:#F0A63B; --c-rep:#E4EDEA; --c-ldof:#7F8E89;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1513; --surface:#16201D; --surface-2:#1D2926; --ink:#E4EDEA; --ink-2:#A6B5B0; --ink-3:#6F7E79;
+  --line:#2B3A36; --accent:#4BC2CB; --accent-soft:#113A3D; --loop:#F0A63B; --loop-soft:#3A2A10;
+  --bgc:#86B6D8; --pinna:#D69DC9; --ona:#92CB8C; --eco:#DDB466;
+  --c-sd:#A3B0B8; --c-hydro:#6FA8E0; --c-geo:#D6975C; --c-hyd:#4BC2CB; --c-map:#AC90DD; --c-en:#F0A63B; --c-rep:#E4EDEA; --c-ldof:#7F8E89;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:1440px;margin:0 auto;padding-inline:24px;padding-block:28px 64px}
+@media (max-width:600px){.wrap{padding-inline:16px}}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+header.top{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+header.top h1{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.01em;line-height:1.05;margin-top:6px}
+header.top p{margin:8px 0 0;color:var(--ink-2);max-width:66ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+
+/* diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 8px}
+.dscroll{overflow-x:auto}
+.dscroll svg{display:block;width:100%;min-width:1000px;height:auto}
+.hint{display:none;font-size:12.5px;color:var(--ink-3);margin:4px 8px 0}
+@media (max-width:1040px){.hint{display:block}}
+.n{cursor:pointer;transition:opacity .15s}
+.n .box{fill:var(--surface);stroke:var(--line);stroke-width:1.2;transition:stroke .15s,stroke-width .15s}
+.n:hover .box,.n:focus .box{stroke:var(--ink-3)}
+.n:focus{outline:none}
+.n:focus-visible .box{stroke:var(--accent);stroke-width:2.5}
+.n .stripe{fill:var(--nc)}
+.n .tg{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;fill:var(--ink-3)}
+.n .tt{font-family:var(--display);font-weight:600;font-size:18px;fill:var(--ink)}
+.n .sb{font-family:var(--body);font-size:12.5px;fill:var(--ink-2)}
+.n .rl{font-family:var(--mono);font-size:10px;letter-spacing:.05em;fill:var(--accent)}
+.n.screen .box{fill:transparent;stroke-dasharray:4 4}
+.n.end .box{fill:var(--ink);stroke:var(--ink)} .n.end .tt{fill:var(--bg)} .n.end .tg{fill:var(--ink-3)}
+.n.hit .box{stroke:var(--accent);stroke-width:2.6}
+.e{fill:none;stroke:var(--ec);stroke-width:1.8;stroke-linejoin:round;transition:opacity .15s,stroke-width .15s}
+.e.fb{stroke-dasharray:7 5}
+.e.sc{stroke-dasharray:2 4}
+.e.hi{stroke-width:3}
+.lb rect{fill:var(--surface);stroke:var(--ec);stroke-width:1}
+.lb text{font-family:var(--body);font-size:11.5px;font-weight:600;fill:var(--ec)}
+.lb.fb rect{fill:var(--loop-soft)}
+.lb{transition:opacity .15s}
+svg .dim{opacity:.13}
+.gate{font-family:var(--mono);font-size:10px;letter-spacing:.05em;fill:var(--c-hyd)}
+
+/* dependency table */
+.deps{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+.dep{border:1px solid var(--line);border-top:3px solid var(--nc);border-radius:8px;padding:9px 12px;background:var(--surface);font-size:13.5px}
+.dep b{font-family:var(--display);font-weight:600;font-size:16px;display:block;margin-bottom:3px}
+.dep .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.dep p{margin:0 0 4px;color:var(--ink-2)}
+
+/* sections */
+section.block{margin-top:34px}
+section.block > h2{font-size:22px;font-weight:600;margin-bottom:4px}
+section.block > p.sub{margin:0 0 14px;color:var(--ink-2);font-size:14px}
+.tl-scroll{overflow-x:auto;padding-bottom:6px}
+.tl{display:grid;grid-template-columns:repeat(12,minmax(110px,1fr));min-width:1320px;border-top:2px solid var(--ink)}
+.mo{border-left:1px solid var(--line);padding:8px 8px 10px;display:flex;flex-direction:column;gap:6px;min-height:120px}
+.mo:first-child{border-left:0}
+.mo .m{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.ev{font:inherit;text-align:left;font-size:12.5px;line-height:1.25;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--mc);border-radius:5px;padding:5px 7px;cursor:pointer;color:var(--ink)}
+.ev:hover{border-color:var(--mc)}
+.ev .d{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-bottom:1px}
+.ev.cp{border-left-style:dotted;background:transparent}
+.m2{--mc:#0B7580}.m3{--mc:#6B4FA0}.m4{--mc:#B06A00}.m5{--mc:#B33A3A}.mpm{--mc:var(--ink-3)}
+.mlegend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2);margin-bottom:10px}
+.mlegend span{display:inline-flex;align-items:center;gap:6px}
+.mlegend i{width:12px;height:12px;border-radius:3px;background:var(--mc);display:inline-block}
+
+/* tracer */
+.tracer{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.orgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px 20px;align-items:start}
+.org{display:flex;flex-wrap:wrap;gap:6px;align-items:center;align-content:flex-start}
+.org-name{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;width:100%;display:flex;align-items:center;gap:6px;color:var(--ink-3)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none;background:var(--oc)}
+.o-BGC{--oc:var(--bgc)} .o-Pinna{--oc:var(--pinna)} .o-ONA{--oc:var(--ona)} .o-Ecoscape{--oc:var(--eco)}
+.pchip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 10px 3px 8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.pchip:hover{border-color:var(--oc)}
+.pchip[aria-pressed="true"]{background:var(--oc);border-color:var(--oc);color:var(--surface)}
+.pchip[aria-pressed="true"] .dot{background:var(--surface)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.trace-summary{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
+.trace-summary strong{color:var(--ink)}
+.trace-summary .clear{font:inherit;font-size:13px;margin-left:8px;background:none;border:0;color:var(--accent);cursor:pointer;text-decoration:underline;padding:0}
+details.notes{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+details.notes summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:17px}
+details.notes ul{margin:10px 0 2px;padding-left:20px;color:var(--ink-2);font-size:14px;max-width:90ch}
+details.notes li{margin-bottom:6px}
+.src{font-size:12.5px;color:var(--ink-3);margin-top:22px}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,16,14,.35);z-index:20}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--surface);border-left:1px solid var(--line);z-index:21;overflow-y:auto;padding:calc(18px + env(safe-area-inset-top,0px)) 22px calc(28px + env(safe-area-inset-bottom,0px));box-shadow:-10px 0 30px rgba(0,0,0,.15)}
+.drawer .x{position:sticky;top:0;float:right;font:inherit;font-size:22px;line-height:1;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;width:34px;height:34px;cursor:pointer;color:var(--ink)}
+.drawer h2{font-size:26px;font-weight:700;margin:6px 0 6px;line-height:1.05}
+.drawer .q{color:var(--ink-2);margin:0 0 14px}
+.drawer h4{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:18px 0 6px;font-weight:500}
+.drawer ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.drawer li.p{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:start;font-size:14px}
+.drawer li.p .dot{margin-top:6px}
+.drawer li.p small{grid-column:2;color:var(--ink-2);font-size:13px}
+.drawer li.p button{font:inherit;font-weight:600;background:none;border:0;padding:0;color:var(--ink);cursor:pointer;text-align:left}
+.drawer li.p button:hover{color:var(--accent);text-decoration:underline}
+.drawer .ws{border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13.5px}
+.drawer .ws b{display:block;font-family:var(--display);font-weight:600;font-size:15px}
+.drawer .ws span{color:var(--ink-2)}
+.drawer li.b{font-size:14px;padding-left:14px;position:relative}
+.drawer li.b::before{content:"";position:absolute;left:0;top:9px;width:6px;height:1.5px;background:var(--ink-3)}
+.drawer li.link{font-size:14px}
+.drawer li.link button{font:inherit;font-weight:600;background:none;border:0;padding:0;color:var(--accent);cursor:pointer}
+.drawer li.link span{color:var(--ink-2)}
+.drawer table{width:100%;border-collapse:collapse;font-size:13.5px}
+.drawer td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.drawer td.d{font-family:var(--mono);font-size:12px;white-space:nowrap;padding-right:12px}
+.drawer td.r{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);text-align:right;white-space:nowrap;padding-left:8px}
+.drawer .note{font-size:13.5px;background:var(--accent-soft);border-radius:8px;padding:8px 10px;margin-top:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">BGC 0511017 · FBC / FHIMP · Phase 2</div>
+      <h1>Okanagan data dependencies</h1>
+      <p>What each workstream needs, and from whom. Every arrow is a dataset or product handed downstream, coloured by the team that supplies it. Hover over a box to isolate its inputs and outputs; click it for people and dates.</p>
+    </div>
+    <div class="legend">
+      <span><svg width="40" height="10"><line x1="0" y1="5" x2="40" y2="5" stroke="var(--ink-2)" stroke-width="2"/></svg>Data hand-off</span>
+      <span><svg width="40" height="10"><line x1="0" y1="5" x2="40" y2="5" stroke="var(--loop)" stroke-width="2" stroke-dasharray="7 5"/></svg>Feedback loop (revise)</span>
+      <span><svg width="40" height="10"><line x1="0" y1="5" x2="40" y2="5" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="2 4"/></svg>Screening only</span>
+    </div>
+  </header>
+
+  <div class="diagram">
+    <div class="dscroll"><svg id="dg" viewBox="0 0 1400 700" role="img" aria-label="Data dependency flowchart"></svg></div>
+    <p class="hint">Scroll sideways to see the whole chart.</p>
+  </div>
+  <div class="deps" id="deps"></div>
+
+  <section class="block">
+    <h2>Milestone calendar</h2>
+    <p class="sub">Every dated deliverable in the deck, by month. Click one to open the team that owns it.</p>
+    <div class="mlegend">
+      <span class="m2"><i></i>Milestone 2</span><span class="m3"><i></i>Milestone 3</span><span class="m4"><i></i>Milestone 4</span><span class="m5"><i></i>Milestone 5</span><span class="mpm"><i></i>FBC–TC checkpoint</span>
+    </div>
+    <div class="tl-scroll"><div class="tl" id="tl"></div></div>
+  </section>
+
+  <section class="block">
+    <h2>Who's on each team</h2>
+    <p class="sub">Pick a name to highlight the boxes they work in.</p>
+    <div class="tracer" id="tracer">
+      <div class="orgs" id="orgs"></div>
+      <div class="trace-summary" id="traceSummary" hidden></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="src">Source: <i>Okanagan Project Team – Roles and Connections.pptx</i> (hand-off matrix, workstream-interface and team slides), 01 Project Management / 02 Team Project Coordination / 05 Project Team Coordination. Built 22 Sept 2026.</p>
+  </section>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="dTitle"></aside>
+
+<script>
+const P = {
+  KH:["Kris Holm","BGC","Project Manager"],
+  RC:["Richard Carter","BGC","Data & data workflows task lead; Assistant PM"],
+  BE:["Brett Eaton","BGC","Overall technical lead"],
+  LM:["Lucy MacKenzie","BGC","Riverine geomorphic & flow-estimation task lead"],
+  NN:["Nastaran Nematollahi","BGC","Geomorphic analyst; hydraulic modelling & mapping"],
+  BCP:["Beatrice Collier-Pandya","BGC","Steep-creek hazard task lead"],
+  AM:["Andrew Mitchell","BGC","Landslide-dam hazard, geotechnical"],
+  JE:["Jeanine Engelbrecht","BGC","Landslide-dam hazard, remote sensing"],
+  PG:["Patrick Grover","BGC","Clear-water floods & hydraulic modelling task lead"],
+  KG:["Kaushal Gnyawali","BGC","Steep-creek analyst; modelling & mapping"],
+  LS:["Laura Szczyrba","BGC","Hydraulic modelling"],
+  MH:["Melissa Hairabedian","BGC","Climate change task lead"],
+  HA:["Heba Abdelmoaty","BGC","Climate data analyst (BGC & U of Calgary)"],
+  MB:["Matthew Buchanan","BGC","Data management & mapping task lead"],
+  HW:["Hamish Weatherly","BGC","Overall technical review"],
+  SD:["Sarah Davidson","BGC","Geomorphic review"],
+  RM:["Rob Millar","BGC","Corporate review"],
+  BM:["Benjamin Macdonald","BGC","Geomorphic analyst"],
+  EL:["Elijah Loos","BGC","Field and data support"],
+  GAV:["Gillian Aubie Vines","Pinna","Engagement task lead"],
+  NG:["Nicole Gordon","Pinna","Engagement support"],
+  JR:["Jake Rogger","Pinna","Engagement support"],
+  ADG:["Ayla De Grandpre","Pinna","Engagement support"],
+  CC:["Courtney Crichton","Pinna","Engagement support"],
+  DC:["Denni Clement","Pinna","Indigenous-only engagement session lead"],
+  TT:["Tessa Terbasket","ONA","Historical flooding & watershed conditions"],
+  SF:["Skyeler Folks","ONA","Data gathering & GIS mapping"],
+  RW:["Robert Wagner","Ecoscape","Survey lead"],
+  SP:["Shane Pederson","Ecoscape","Survey analyst"]
+};
+const ini = id => P[id][0].split(/[\s-]+/).map(w=>w[0]).join("");
+
+/* kind: lead | core | support | review */
+const N = {
+  pm:{band:1,title:"Project Management",tag:"Task 1 · M2–M5",
+    q:"Keeps the whole chain on schedule and coordinated with FBC and the Technical Committee.",
+    team:[["KH","lead","Project Manager"],["RC","core","Assistant PM / coordination"],["NG","core","Coordination"],
+          ["PG","support","Milestone / technical input"],["BE","support","Milestone / technical input"],["LM","support","Milestone / technical input"],["MH","support","Milestone / technical input"],["HA","support","Milestone / technical input"],["HW","review","Technical review input"]],
+    outputs:["Monthly progress reports, schedules, agendas and minutes (ongoing)","FBC–TC checkpoint meetings 2–5"],
+    due:[["Nov 2026","Checkpoint 2"],["Jan 2027","Checkpoint 3"],["May 2027","Checkpoint 4"],["Aug 2027","Checkpoint 5"]]},
+  survey:{col:1,row:"1",title:"Surveys",tag:"Ecoscape · within Task 3",
+    q:"Collects what the lidar can't: new lidar, bathymetry and structure geometry.",
+    team:[["RW","lead","Survey lead"],["SP","core","Survey analyst"]],
+    ws:[["Lidar + orthoimagery","RW, SP","Moffat Creek lidar and orthophotos, with control and metadata."],["Bathymetric survey","RW, SP","Cross sections for Coldstream and Mission creeks."],["Hydraulic structures","RW, SP","High-consequence bridge and culvert geometry for the models."]],
+    outputs:["Georeferenced lidar and orthophotos","Bathymetric cross sections","Surveyed bridge / culvert geometry","Control, datums and metadata; survey reports and source files"],
+    due:[],note:"Survey outputs are recorded in the Data Collection and Management Memo."},
+  data:{col:1,row:"2",title:"Data Collection & Management",tag:"Task 3 · M2",
+    q:"Field investigation plus the data backbone every downstream team draws on.",
+    team:[["RC","lead","Data workflows / field coordination"],["MB","core","Mapping and data"],["BCP","core","Field / hazard input"],["NN","core","Field / hazard input"],["KG","core","Field / hazard input"],["EL","core","Field and data support"],
+          ["KH","support","Task-specific input"],["BE","support","Task-specific input"],["PG","support","Task-specific input"],["HA","support","Task-specific input"],["NG","support","Task-specific input"],["JR","support","Task-specific input"],["DC","support","Task-specific input"],["HW","review","Technical review"]],
+    outputs:["Merged terrain, source datasets and metadata","Field observations, grain size, structure notes","Data Collection and Management Memo"],
+    due:[["Nov 15, 2026","Memo draft","2 wk"],["Dec 18, 2026","Memo final + comment log","1 wk"]],
+    note:"Field investigation ran 14–18 Sept 2026 (South block)."},
+  hydro:{col:2,row:"1",title:"Hydrology & Future Conditions",tag:"Task 2 · M2",
+    q:"Answers: how much water, and when?",
+    team:[["BE","lead","Technical lead / author"],["LM","core","Flow estimation task lead"],["MH","core","Climate change task lead / author"],["HA","core","Climate data analyst"],["TT","core","Historical flooding & watershed context"],
+          ["KH","support","PM"],["MB","support","Graphics / mapping"],["HW","review","Technical review"],["RM","review","Corporate review"]],
+    ws:[["Flow estimation","LM (lead), BE","Input locations, flood mechanisms, design flows, uncertainty, recommended model inflows."],["Climate + future conditions","MH (lead), HA","Hydroclimate change and climate adjustments to design flows."],["Historical + watershed context","TT, BE","Historical flooding and local knowledge to ground flood mechanisms."]],
+    outputs:["Hydrological input locations","Design-flow estimates and uncertainty","Future-condition adjustments","Recommended hydraulic scenarios","Hydrological Analysis Memo"],
+    due:[["Oct 30, 2026","Memo draft","2 wk"],["Nov 30, 2026","Memo final + comment log","2 wk"]]},
+  geo:{col:2,row:"2",title:"Geomorphic Hazard Analysis",tag:"Task 5 · M3",
+    q:"Answers: how can the channel and fan respond?",
+    team:[["BE","lead","Technical lead / author"],["LM","core","Riverine task lead"],["NN","core","Riverine analysis & mapping"],["LS","core","Riverine analysis & mapping"],["BCP","core","Steep-creek task lead / author"],["KG","core","Steep-creek analysis & modelling"],["BM","core","Geomorphic analysis"],
+          ["KH","support","PM"],["HW","review","Technical review"],["SD","review","Geomorphic review"],["RM","review","Corporate review"]],
+    ws:[["Riverine geomorphic hazard","LM (lead), BE, NN, LS","Alluvial-fan identification, erosion, migration and avulsion."],["Steep-creek hazard","BCP (lead), BE, KG","Debris-flow and debris-flood assessment; hazard-intensity inputs."]],
+    outputs:["Process characterization (riverine, steep creek)","Avulsion, erosion and aggradation scenarios","Hazard zones and geomorphic setbacks","Event frequency / magnitude inputs","Geomorphic Analysis Memo"],
+    due:[["Nov 15, 2026","Memo draft","1 wk"],["Jan 31, 2027","Memo final + comment log",""]]},
+  ldof:{col:2,row:"3",kind:"screen",title:"Landslide-Dam Screening",tag:"Specialists · Task 5",
+    q:"Desktop outbreak-flood screening. Not mapped as a scenario.",
+    team:[["AM","core","Geotechnical specialist"],["JE","core","Remote-sensing specialist"]],
+    outputs:["Screening findings","Future-work recommendations"],due:[],
+    note:"Feeds the Geomorphic Analysis Memo and final reporting only."},
+  hyd:{col:3,row:"1",title:"Hydraulic Modelling",tag:"Task 6 · M3–M4",
+    q:"Turns flows and geomorphic scenarios into depth, velocity and extent.",
+    gate:"Can't be finalized until both the design flows and the geomorphic scenarios are defined.",
+    team:[["PG","lead","Task lead / author"],["LS","core","Hydraulic modeller"],["NN","core","Modelling and mapping"],["KG","core","Steep-creek modelling and mapping"],
+          ["KH","support","Technical interface"],["BE","support","Technical interface / fan integration"],["LM","support","Technical interface"],["BCP","support","Steep-creek hazard input"],["MB","support","Technical interface"],["HW","review","Technical review"]],
+    ws:[["Low-gradient / clear-water","PG (lead), LS, NN","2D models on merged terrain and survey data."],["Intermediate / alluvial fan","PG (lead), LS, NN, BE","Scenarios adapted for debris floods, avulsion and aggradation."],["Steep creek","PG, KG, BCP","Multiple AEP and process scenarios; deposition depth and intensity."]],
+    outputs:["Model geometry and boundaries","Flow, process and blockage scenarios","Depth, velocity, extent, intensity, water levels","Hydraulic Model Development Memo"],
+    due:[["Dec 4, 2026","Checkpoint 3 table","1 wk"],["Dec 18, 2026","Model memo draft","2 wk"],["Jan 31, 2027","Model memo final","2 wk"]]},
+  eng2:{col:3,row:"3",kind:"eng",title:"Engagement 2",tag:"Task 4 · M3",
+    q:"Shows communities early results and sample maps; returns requested changes before draft maps.",
+    team:[["GAV","lead","Task lead"],["NG","core","Delivery"],["JR","core","Delivery"],["ADG","core","Delivery"],["DC","core","Indigenous-only debrief"],
+          ["KH","support","PM / technical interface"],["BE","support","PM / technical interface"],["LM","support","Content"],["MB","support","Content"]],
+    outputs:["Documented feedback and requested changes","Engagement Memo 2"],
+    due:[["Feb 12, 2027","Memo 2 draft","1 wk"],["Mar 5, 2027","Memo 2 final","2 wk incl. communities"]]},
+  map:{col:4,row:"1",title:"Floodplain Mapping",tag:"Task 7 · M3, M5",
+    q:"An integration step: combines model, geomorphic and hydrology outputs into the map products.",
+    team:[["MB","lead","Map / data production"],["SF","core","GIS and place-name support"],["PG","core","Hydraulic-results interface"],["KG","core","Hazard-results interface (intensity maps)"],["BCP","core","Hazard-results interface (intensity maps)"],["BE","core","Technical accountability; fan scenarios"],
+          ["RC","support","Data workflow / packaging"],["KH","support","PM accountability"],["GAV","support","Engagement / presentation input"],["NG","support","Engagement / presentation input"],["JR","support","Engagement / presentation input"],["HW","review","Technical review"]],
+    ws:[["Standard floodplain maps","MB, SF, PG","FCLs, floodway / fringe, isolines, setbacks, flood-extent maps."],["Standard* alluvial-fan maps","MB, SF, PG, BE","Scenario-based hazard polygons, adapted FCLs, geomorphic setbacks."],["Hazard-intensity maps","MB, KG, PG, BCP","Composite intensity maps, setbacks, extent / depth / velocity."]],
+    outputs:["Sample, draft, near-final and final maps","Geomorphic hazard maps","GIS geodatabases and map PDFs"],
+    due:[["Dec 18, 2026","Sample maps","2 wk"],["Apr 30, 2027","Draft maps","4 wk"],["Jul 15, 2027","Near-final maps","6 wk"],["Sep 15, 2027","Final maps + data","2 wk"]]},
+  eng3:{col:4,row:"3",kind:"eng",title:"Engagement 3",tag:"Task 8 · M5",
+    q:"Reviews draft maps with communities; feedback goes back to mapping.",
+    team:[["GAV","lead","Task lead"],["NG","core","Delivery"],["JR","core","Delivery"],["ADG","core","Delivery"],["CC","core","Delivery"],["DC","core","Indigenous-only debrief"],
+          ["KH","support","PM / technical interface"],["BE","support","PM / technical interface"],["RC","support","Technical / data follow-up"]],
+    outputs:["Community feedback on draft maps","Engagement Memo 3","Engagement log"],
+    due:[["Jun 11, 2027","Memo 3 draft","1 wk"],["Jun 30, 2027","Memo 3 final","1 wk"],["Jul 15, 2027","Engagement log","2 wk"]]},
+  rep:{col:5,row:"1",title:"Reporting & Data Delivery",tag:"Task 9 · M5",
+    q:"Consolidates memos, maps and engagement findings into the final package.",
+    team:[["BE","lead","Summary Report author"],["MB","core","GIS / digital delivery"],["RC","core","GIS / digital delivery"],["GAV","core","Engagement reporting (engagement team)"],
+          ["PG","support","Content"],["LM","support","Content"],["MH","support","Content"],["NN","support","Content"],["KG","support","Content"],["KH","support","PM"],["HW","review","Technical review"],["RM","review","Corporate review"]],
+    outputs:["Summary Report with technical memos appended","Community Engagement Summary Report","Map package, geodatabases, metadata","Project metrics"],
+    due:[["Apr 30, 2027","Draft report","4 wk"],["Jul 15, 2027","Near-final report / data","6 / 2 wk"],["Sep 15, 2027","Final report, maps, data","2 wk"]]},
+  fbc:{col:5,row:"3",kind:"end",title:"FBC, communities & archive",tag:"Client",
+    q:"Final maps, reports and digital deliverables, issued with comment logs.",team:[],outputs:[],due:[]},
+  review:{band:1,title:"Independent Review",tag:"All deliverables",
+    q:"Review windows start when the draft or near-final product is delivered.",
+    team:[["HW","review","Overall technical review"],["SD","review","Geomorphic review"],["RM","review","Corporate review"]],
+    steps:["Prepare","Submit on due date","Technical review — HW, SD","Resolve + corporate review — RM","Issue with comment log"],
+    outputs:[],due:[]}
+};
+
+/* edges: [from,to,label,type] */
+
+/* merged diagram nodes */
+function mergeTeams(a,b){const seen=new Set(),out=[];[...a,...b].forEach(t=>{if(!seen.has(t[0])){seen.add(t[0]);out.push(t)}});return out}
+N.sd={title:"Survey & Field Data",tag:"Ecoscape + Task 3 · M2",q:"Everything measured on the ground or from the air, organised by the data-management workstream.",
+  team:mergeTeams(N.data.team,N.survey.team),ws:N.survey.ws,outputs:[...N.survey.outputs,...N.data.outputs],due:N.data.due,
+  note:"Field investigation ran 14–18 Sept 2026 (South block). Ecoscape survey outputs are recorded in the Data Collection and Management Memo."};
+N.en={title:"Engagement",tag:"Tasks 4 & 8 · M3, M5",kind:"eng",q:"Two review rounds with communities: sample maps (Engagement 2) and draft maps (Engagement 3). Feedback returns to modelling and mapping.",
+  team:mergeTeams(N.eng2.team,N.eng3.team),outputs:["Documented feedback and requested changes","Engagement Memos 2 and 3","Engagement log"],
+  due:[...N.eng2.due,...N.eng3.due]};
+
+/* ---------- layout (viewBox units) ---------- */
+const L={
+  sd:{x:20,y:260,w:170,h:130,tag:"ECOSCAPE + TASK 3",t:["Survey &","Field Data"],s:["lidar, bathymetry,","structures, field obs."]},
+  hydro:{x:330,y:90,w:170,h:110,tag:"TASK 2 · M2",t:["Hydrology"],s:["design flows,","future conditions"]},
+  geo:{x:330,y:470,w:170,h:110,tag:"TASK 5 · M3",t:["Geomorphology"],s:["process scenarios,","hazard zones"]},
+  ldof:{x:325,y:622,w:180,h:50,cls:"screen",t2:["Landslide-dam screening","→ geomorph memo only"]},
+  hyd:{x:640,y:260,w:170,h:130,tag:"TASK 6 · M3–M4",t:["Hydraulic","Modelling"],s:["waits on flows AND","geomorphic scenarios"]},
+  map:{x:950,y:260,w:170,h:130,tag:"TASK 7 · M3, M5",t:["Floodplain","Mapping"],s:["integrates every","technical output"]},
+  en:{x:740,y:560,w:200,h:100,tag:"TASKS 4 & 8",t:["Engagement"],s:["reviews sample (Dec 18)","and draft (Apr 30) maps"]},
+  rep:{x:1230,y:260,w:150,h:130,tag:"TASK 9 · M5",t:["Reporting &","Delivery"],s:["memos append to","Summary Report"]},
+  fbc:{x:1230,y:500,w:150,h:80,cls:"end",tag:"CLIENT",t:["FBC +","communities"],small:1}
+};
+/* edges: from, to, label (\n = line break), points, label pos, type */
+const DE=[
+  ["sd","hyd","terrain / DEM\nchannel geometry\nbridges & culverts",[[190,310],[640,310]],[265,310]],
+  ["sd","map","source datasets + metadata",[[105,260],[105,40],[1060,40],[1060,260]],[600,40]],
+  ["geo","sd","fieldwork: 3D scans,\ngrain size, observations",[[330,540],[260,540],[260,360],[190,360]],[260,455]],
+  ["hydro","geo","flood mechanisms\nevent magnitudes",[[415,200],[415,470]],[415,400]],
+  ["hydro","hyd","design flows\nfuture conditions",[[500,160],[570,160],[570,285],[640,285]],[570,215]],
+  ["hydro","map","AEP event probabilities\nfuture scenarios",[[500,115],[1030,115],[1030,260]],[800,115]],
+  ["geo","hyd","avulsion, erosion &\naggradation scenarios",[[500,545],[570,545],[570,355],[640,355]],[570,420]],
+  ["geo","map","hazard zones · avulsion paths · setbacks",[[500,490],[1090,490],[1090,390]],[800,490]],
+  ["ldof","geo","",[[415,622],[415,580]],null,"sc"],
+  ["hyd","map","depth · velocity\nextent · water levels",[[810,325],[950,325]],[880,325]],
+  ["hyd","en","sample results",[[690,390],[690,610],[740,610]],[690,540]],
+  ["map","en","sample &\ndraft maps",[[1050,390],[1050,610],[940,610]],[1050,540]],
+  ["en","hyd","",[[760,560],[760,390]],null,"fb"],
+  ["en","map","community feedback\n→ revise models & maps",[[925,560],[925,430],[1000,430],[1000,390]],[843,538],"fb"],
+  ["map","rep","maps\n+ GIS",[[1120,325],[1230,325]],[1175,325]],
+  ["en","rep","Memos 2 & 3,\nengagement log",[[940,645],[1190,645],[1190,370],[1230,370]],[1080,645]],
+  ["rep","fbc","final package\nSep 15, 2027",[[1305,390],[1305,500]],[1305,445]]
+];
+const DIAG=["sd","hydro","geo","ldof","hyd","map","en","rep","fbc"];
+
+const NS="http://www.w3.org/2000/svg",svg=document.getElementById("dg");
+const mk=(tag,attrs,parent)=>{const el=document.createElementNS(NS,tag);for(const k in attrs)el.setAttribute(k,attrs[k]);parent&&parent.appendChild(el);return el};
+function rounded(pts,r=12){let d=`M${pts[0][0]},${pts[0][1]}`;for(let i=1;i<pts.length;i++){const p=pts[i];if(i<pts.length-1){const a=pts[i-1],n=pts[i+1];const d1=Math.hypot(p[0]-a[0],p[1]-a[1]),d2=Math.hypot(n[0]-p[0],n[1]-p[1]);const rr=Math.min(r,d1/2,d2/2);const s=[p[0]-(p[0]-a[0])/d1*rr,p[1]-(p[1]-a[1])/d1*rr],e=[p[0]+(n[0]-p[0])/d2*rr,p[1]+(n[1]-p[1])/d2*rr];d+=` L${s[0]},${s[1]} Q${p[0]},${p[1]} ${e[0]},${e[1]}`}else d+=` L${p[0]},${p[1]}`}return d}
+const colorOf=(id,type)=>type==="fb"?"var(--loop)":`var(--c-${id})`;
+
+const defs=mk("defs",{},svg);
+const markers={};
+function marker(color){const key=color.replace(/\W/g,"");if(markers[key])return key;markers[key]=1;const m=mk("marker",{id:"mk"+key,viewBox:"0 0 10 10",refX:"8.5",refY:"5",markerWidth:"6.5",markerHeight:"6.5",orient:"auto-start-reverse"},defs);mk("path",{d:"M0 0 L10 5 L0 10 Z",style:`fill:${color}`},m);return key}
+
+const gE=mk("g",{},svg),gN=mk("g",{},svg),gL=mk("g",{},svg);
+const edgeEls=DE.map(e=>{
+  const [a,b,label,pts,lp,type]=e,c=colorOf(a,type);
+  const p=mk("path",{d:rounded(pts),class:"e"+(type?" "+type:""),style:`--ec:${c}`,"marker-end":`url(#mk${marker(c)})`},gE);
+  let lab=null;
+  if(label&&lp){
+    lab=mk("g",{class:"lb"+(type?" "+type:""),style:`--ec:${c}`},gL);
+    const r=mk("rect",{rx:5},lab);const lines=label.split("\n");
+    const t=mk("text",{x:lp[0],"text-anchor":"middle"},lab);
+    lines.forEach((ln,i)=>{const ts=mk("tspan",{x:lp[0],y:lp[1]+(i-(lines.length-1)/2)*14+4},t);ts.textContent=ln});
+    lab._r=r;lab._t=t;
+  }
+  return {e,p,lab};
+});
+DIAG.forEach(id=>{
+  const l=L[id];const g=mk("g",{class:"n"+(l.cls?" "+l.cls:""),tabindex:"0",role:"button","data-node":id,style:`--nc:var(--c-${id==="fbc"?"rep":id})`,"aria-label":N[id].title},gN);
+  mk("rect",{class:"box",x:l.x,y:l.y,width:l.w,height:l.h,rx:10},g);
+  if(!l.cls){const s=mk("rect",{class:"stripe",x:l.x,y:l.y,width:l.w,height:5,rx:2},g);mk("rect",{class:"stripe",x:l.x,y:l.y+2,width:l.w,height:3},g)}
+  let y=l.y+(l.cls==="screen"?21:22);
+  if(l.tag){const t=mk("text",{class:"tg",x:l.x+14,y:y+2},g);t.textContent=l.tag;y+=24}
+  (l.t||[]).forEach(s=>{const t=mk("text",{class:"tt",x:l.x+14,y:y+(l.small?-2:0)},g);t.textContent=s;if(l.small)t.style.fontSize="16px";y+=21});
+  y+=3;(l.s||[]).forEach(s=>{const t=mk("text",{class:"sb",x:l.x+14,y},g);t.textContent=s;y+=16});
+  (l.t2||[]).forEach((s,i)=>{const t=mk("text",{class:i?"sb":"sb",x:l.x+12,y:l.y+21+i*17},g);t.textContent=s;if(!i)t.style.fontWeight="600"});
+  const rl=mk("text",{class:"rl",x:l.x+14,y:l.y+l.h+14},g);g._rl=rl;
+});
+function sizeLabels(){edgeEls.forEach(({lab})=>{if(!lab)return;const b=lab._t.getBBox();lab._r.setAttribute("x",b.x-6);lab._r.setAttribute("y",b.y-3);lab._r.setAttribute("width",b.width+12);lab._r.setAttribute("height",b.height+6)})}
+sizeLabels();document.fonts&&document.fonts.ready.then(sizeLabels);
+
+/* ---------- dependency cards ---------- */
+const deps=document.getElementById("deps");
+["sd","hydro","geo","hyd","map","en","rep"].forEach(id=>{
+  const ins=DE.filter(e=>e[1]===id&&e[2]),outs=DE.filter(e=>e[0]===id&&e[2]);
+  const f=s=>s.replace(/\n/g," ");
+  const d=document.createElement("div");d.className="dep";d.style.setProperty("--nc",`var(--c-${id})`);
+  d.innerHTML=`<b>${N[id].title}</b>${ins.length?`<div class="k">Needs</div><p>${ins.map(e=>`${f(e[2])} <i>(${N[e[0]].title})</i>`).join("; ")}</p>`:`<div class="k">Needs</div><p>No upstream project data: the starting point.</p>`}${outs.length?`<div class="k">Supplies</div><p>${outs.map(e=>`${f(e[2])} → ${N[e[1]].title}`).join("; ")}</p>`:""}`;
+  deps.appendChild(d);
+});
+N.hyd.note="Can't be finalized until both the design flows (Hydrology) and the geomorphic scenarios are defined.";
+
+/* ---------- state ---------- */
+let person=null,focus=null;
+const ALLTEAMS=["pm","sd","hydro","geo","ldof","hyd","map","en","rep","review"];
+function teamsFor(pid){return ALLTEAMS.filter(k=>N[k].team.some(t=>t[0]===pid))}
+function applyState(){
+  const nodes=[...svg.querySelectorAll(".n")];
+  let active=null;
+  if(person){active=new Set(teamsFor(person))}
+  else if(focus){active=new Set([focus]);DE.forEach(e=>{if(e[0]===focus)active.add(e[1]);if(e[1]===focus)active.add(e[0])})}
+  nodes.forEach(g=>{const id=g.dataset.node;g.classList.toggle("dim",!!active&&!active.has(id));g.classList.toggle("hit",!!person&&active.has(id));
+    const t=person&&N[id].team.find(t=>t[0]===person);g._rl.textContent=t?({lead:"LEAD",core:"CORE",support:"SUPPORT",review:"REVIEW"}[t[1]]):""});
+  edgeEls.forEach(({e,p,lab})=>{let on=true;
+    if(person)on=active.has(e[0])&&active.has(e[1]);else if(focus)on=e[0]===focus||e[1]===focus;
+    p.classList.toggle("dim",!!active&&!on);p.classList.toggle("hi",!!focus&&!person&&on);lab&&lab.classList.toggle("dim",!!active&&!on)});
+  const S=document.getElementById("traceSummary");
+  if(person){const ids=teamsFor(person);S.hidden=false;
+    S.innerHTML=`<strong>${P[person][0]}</strong>, ${P[person][1]} — ${P[person][2]}. On ${ids.length} team${ids.length>1?"s":""}: ${ids.map(k=>{const t=N[k].team.find(t=>t[0]===person);return `<strong>${N[k].title}</strong> (${t[2].toLowerCase()})`}).join("; ")}.<button class="clear" id="clr">Clear</button>`;
+    document.getElementById("clr").onclick=()=>setPerson(null)}else S.hidden=true;
+  document.querySelectorAll(".pchip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.p===person?"true":"false"));
+}
+function setPerson(pid){person=(person===pid)?null:pid;applyState()}
+svg.addEventListener("pointerover",e=>{const g=e.target.closest(".n");const id=g?g.dataset.node:null;if(id!==focus){focus=id;applyState()}});
+svg.addEventListener("pointerleave",()=>{focus=null;applyState()});
+svg.addEventListener("click",e=>{const g=e.target.closest(".n");if(g)openNode(g.dataset.node)});
+svg.addEventListener("keydown",e=>{const g=e.target.closest(".n");if(g&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openNode(g.dataset.node)}});
+svg.addEventListener("focusin",e=>{const g=e.target.closest(".n");if(g){focus=g.dataset.node;applyState()}});
+svg.addEventListener("focusout",()=>{focus=null;applyState()});
+
+/* tracer */
+const orgs=document.getElementById("orgs");
+["BGC","Pinna","ONA","Ecoscape"].forEach(o=>{
+  const ids=Object.keys(P).filter(k=>P[k][1]===o);
+  const w=document.createElement("div");w.className="org o-"+o;
+  const label={BGC:"BGC Engineering",Pinna:"Pinna Sustainability",ONA:"Okanagan Nation Alliance",Ecoscape:"Ecoscape"}[o];
+  w.innerHTML=`<div class="org-name"><span class="dot"></span>${label} · ${ids.length}</div>`+ids.map(k=>`<button class="pchip o-${o}" data-p="${k}" aria-pressed="false"><span class="dot"></span>${P[k][0]}</button>`).join("");
+  orgs.appendChild(w);
+});
+orgs.addEventListener("click",e=>{const b=e.target.closest(".pchip");if(b){setPerson(b.dataset.p);if(person)document.querySelector(".diagram").scrollIntoView({behavior:"smooth",block:"start"})}});
+
+/* drawer */
+const drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim");let lastFocus=null;
+function openNode(id){
+  const n=N[id];lastFocus=document.activeElement;
+  const grp=(k,h)=>{const G=n.team.filter(t=>t[1]===k||(k==="core"&&t[1]==="lead"));if(!G.length)return"";return `<h4>${h}</h4><ul>${G.map(t=>`<li class="p o-${P[t[0]][1]}"><span class="dot"></span><button data-p="${t[0]}">${P[t[0]][0]}${t[1]==="lead"?" · lead":""}</button><small>${t[2]} · ${P[t[0]][1]}</small></li>`).join("")}</ul>`};
+  const f=s=>s.replace(/\n/g," ");
+  const inE=DE.filter(e=>e[1]===id&&e[2]),outE=DE.filter(e=>e[0]===id&&e[2]);
+  const links=(G,k)=>`<ul>${G.map(e=>`<li class="link"><button data-n="${e[k]}">${N[e[k]].title}</button> <span>— ${f(e[2])}${e[5]==="fb"?" (feedback)":""}</span></li>`).join("")}</ul>`;
+  drawer.innerHTML=`<button class="x" id="dx" aria-label="Close">×</button>
+   <div class="eyebrow">${n.tag}</div><h2 id="dTitle">${n.title}</h2><p class="q">${n.q}</p>
+   ${inE.length?`<h4>Needs data from</h4>${links(inE,0)}`:""}
+   ${outE.length?`<h4>Supplies data to</h4>${links(outE,1)}`:""}
+   ${n.steps?`<h4>Process</h4><ul>${n.steps.map((s,i)=>`<li class="b">${i+1}. ${s}</li>`).join("")}</ul>`:""}
+   ${grp("core","Delivery team")}${grp("support","Interfaces & support")}${grp("review","Independent review")}
+   ${n.ws?`<h4>Workstreams</h4><div style="display:grid;gap:8px">${n.ws.map(w=>`<div class="ws"><b>${w[0]}</b><span>${w[1]} — ${w[2]}</span></div>`).join("")}</div>`:""}
+   ${n.outputs.length?`<h4>Produces</h4><ul>${n.outputs.map(o=>`<li class="b">${o}</li>`).join("")}</ul>`:""}
+   ${n.due.length?`<h4>Deliverables & dates</h4><table>${n.due.map(d=>`<tr><td class="d">${d[0]}</td><td>${d[1]}</td><td class="r">${d[2]?"review "+d[2]:""}</td></tr>`).join("")}</table>`:""}
+   ${n.note?`<div class="note">${n.note}</div>`:""}`;
+  drawer.hidden=false;scrim.hidden=false;document.getElementById("dx").focus();
+}
+function closeDrawer(){drawer.hidden=true;scrim.hidden=true;lastFocus&&lastFocus.focus&&lastFocus.focus()}
+drawer.addEventListener("click",e=>{
+  if(e.target.id==="dx")return closeDrawer();
+  const p=e.target.closest("[data-p]");if(p){closeDrawer();person=null;setPerson(p.dataset.p);document.querySelector(".diagram").scrollIntoView({behavior:"smooth",block:"start"});return}
+  const n=e.target.closest("[data-n]");if(n)openNode(n.dataset.n);
+});
+scrim.onclick=closeDrawer;
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!drawer.hidden)closeDrawer()});
+
+/* timeline */
+const EV=[
+ ["2026-10-30","Hydrological Analysis Memo — draft","m2","hydro"],
+ ["2026-11-01","Checkpoint 2 (hydrology & data)","mpm","pm",1],
+ ["2026-11-15","Data Collection Memo — draft","m2","data"],
+ ["2026-11-15","Geomorphic Analysis Memo — draft","m3","geo"],
+ ["2026-11-30","Hydrological Analysis Memo — final","m2","hydro"],
+ ["2026-12-04","Checkpoint 3 table","m3","hyd"],
+ ["2026-12-18","Data Collection Memo — final","m2","data"],
+ ["2026-12-18","Hydraulic Model Memo — draft","m3","hyd"],
+ ["2026-12-18","Sample maps","m3","map"],
+ ["2027-01-01","Checkpoint 3 (hydraulic modelling)","mpm","pm",1],
+ ["2027-01-31","Geomorphic Analysis Memo — final","m3","geo"],
+ ["2027-01-31","Hydraulic Model Memo — final","m3","hyd"],
+ ["2027-02-12","Engagement Memo 2 — draft","m3","eng2"],
+ ["2027-03-05","Engagement Memo 2 — final","m3","eng2"],
+ ["2027-04-30","Draft maps","m4","map"],
+ ["2027-04-30","Draft Summary Report","m5","rep"],
+ ["2027-05-01","Checkpoint 4 (draft maps / reports)","mpm","pm",1],
+ ["2027-06-11","Engagement Memo 3 — draft","m5","eng3"],
+ ["2027-06-30","Engagement Memo 3 — final","m5","eng3"],
+ ["2027-07-15","Near-final maps, report & data","m5","map"],
+ ["2027-07-15","Engagement log","m5","eng3"],
+ ["2027-08-01","Checkpoint 5 (near-final)","mpm","pm",1],
+ ["2027-09-15","Final maps, report & digital deliverables","m5","rep"]
+];
+const REMAP={data:"sd",survey:"sd",eng2:"en",eng3:"en"};
+const tl=document.getElementById("tl");const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+for(let i=0;i<12;i++){
+  const y=2026+Math.floor((9+i)/12),m=(9+i)%12;
+  const col=document.createElement("div");col.className="mo";
+  col.innerHTML=`<div class="m">${MN[m]} ${y}</div>`+EV.filter(ev=>{const d=new Date(ev[0]+"T12:00");return d.getFullYear()===y&&d.getMonth()===m}).map(ev=>{const d=new Date(ev[0]+"T12:00");return `<button class="ev ${ev[2]}${ev[4]?" cp":""}" data-n="${REMAP[ev[3]]||ev[3]}"><span class="d">${ev[4]?"month":MN[m]+" "+d.getDate()}</span>${ev[1]}</button>`}).join("");
+  tl.appendChild(col);
+}
+tl.addEventListener("click",e=>{const b=e.target.closest(".ev");if(b)openNode(b.dataset.n)});
+</script>
+
+</body>
+</html>
